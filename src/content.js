@@ -36,9 +36,36 @@
     const text = words.length > 1 ? words[0][0] + words[1][0] : (words[0] || "?")[0];
     let hue = 0;
     for (const ch of name) hue = (hue * 31 + ch.codePointAt(0)) % 360;
-    const tile = el("div", { class: "tile", "aria-hidden": "true", text: text.toUpperCase() });
+    const tile = el("div", { class: "tile", text: text.toUpperCase() });
     tile.style.setProperty("--tile-hue", String(hue));
     return tile;
+  }
+
+  // Largest icon the page declares, so the app we're comparing shows with its own icon.
+  function pageIcon() {
+    let best = null;
+    let bestSize = 0;
+    for (const link of document.querySelectorAll("link[rel~='icon'], link[rel~='apple-touch-icon']")) {
+      if (!link.href) continue;
+      const sizes = link.getAttribute("sizes") || "";
+      let size = /svg/.test(link.type) || /\.svg(\?|$)/.test(link.href) || sizes === "any" ? 512 : 0;
+      for (const m of sizes.matchAll(/(\d+)x\d+/g)) size = Math.max(size, +m[1]);
+      if (!size) size = /apple-touch-icon/.test(link.rel) ? 180 : 16;
+      if (size > bestSize) [best, bestSize] = [link.href, size];
+    }
+    return bestSize >= 32 ? best : null;
+  }
+
+  function icon(name, src, framed) {
+    const box = el("div", { class: framed ? "icon framed" : "icon" });
+    const fallback = () => box.replaceChildren(monogram(name));
+    if (!src) fallback();
+    else {
+      const img = el("img", { src, alt: "", draggable: "false", referrerpolicy: "no-referrer" });
+      img.addEventListener("error", fallback, { once: true });
+      box.append(img);
+    }
+    return el("figure", {}, box, el("figcaption", { text: name }));
   }
 
   function command(text) {
@@ -70,7 +97,7 @@
 
   function hide() {
     if (!host) return;
-    root.querySelector(".card").classList.add("leaving");
+    root.querySelector(".scrim").classList.add("leaving");
     const h = host;
     host = null;
     setTimeout(() => h.remove(), 220);
@@ -82,29 +109,41 @@
     const main = alts[0];
     const title = linux ? `${main.name} works better on oneOS` : `${name} doesn't work on Linux`;
     const lead = why || (linux ? `${main.summary}.` : `${main.name} does. ${main.summary}.`);
+    const previousFocus = document.activeElement;
 
     host = el("better-here");
-    host.style.cssText = "all: initial; position: fixed; z-index: 2147483647; top: 16px; right: 16px;";
+    host.style.cssText = "all: initial; position: fixed; inset: 0; z-index: 2147483647;";
     root = host.attachShadow({ mode: "closed" });
     root.append(el("style", { text: globalThis.BetterHereCSS }));
 
     const others = alts.slice(1);
-    const card = el(
+    const primary = el("a", {
+      class: "btn suggested",
+      href: altHref(main),
+      target: main.flathub ? "_self" : "_blank",
+      rel: "noopener",
+      title: main.flathub ? "Opens your software center" : main.url,
+      text: main.flathub ? `Install ${main.name}` : `Get ${main.name}`,
+    });
+    const dialog = el(
       "section",
-      { class: "card", role: "dialog", "aria-label": title },
+      { class: "dialog", role: "dialog", "aria-modal": "true", "aria-labelledby": "title", tabindex: "-1" },
       el(
-        "header",
-        {},
-        monogram(main.name),
-        el("h2", { text: title }),
-        el("button", {
-          class: "close",
-          "aria-label": "Close",
-          title: "Close",
-          onclick: dismiss,
-        }),
+        "div",
+        { class: "hero", "aria-hidden": "true" },
+        icon(name, pageIcon(), true),
+        el("div", { class: "arrow" }),
+        icon(main.name, main.icon && api.runtime.getURL(main.icon)),
       ),
+      el("h2", { id: "title", text: title }),
       el("p", { class: "lead", text: lead }),
+      main.flathub ? command(`flatpak install flathub ${main.flathub}`) : null,
+      el(
+        "footer",
+        {},
+        el("button", { class: "btn", onclick: dismiss, text: "Continue anyway" }),
+        primary,
+      ),
       others.length
         ? el(
           "p",
@@ -116,30 +155,29 @@
           ]),
         )
         : null,
-      main.flathub ? command(`flatpak install flathub ${main.flathub}`) : null,
-      el(
-        "footer",
-        {},
-        el("button", { class: "btn", onclick: dismiss, text: "Continue anyway" }),
-        el("a", {
-          class: "btn suggested",
-          href: altHref(main),
-          target: main.flathub ? "_self" : "_blank",
-          rel: "noopener",
-          title: main.flathub ? "Opens your software center" : main.url,
-          text: main.flathub ? `Install ${main.name}` : `Get ${main.name}`,
-        }),
-      ),
     );
-    root.append(card);
-    document.documentElement.append(host);
-    card.addEventListener("keydown", (e) => {
-      if (e.key === "Escape") dismiss();
+    const scrim = el("div", { class: "scrim" }, dialog);
+    scrim.addEventListener("click", (e) => {
+      if (e.target === scrim) dismiss();
     });
+    dialog.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") dismiss();
+      if (e.key !== "Tab") return;
+      const items = [...dialog.querySelectorAll("a, button")];
+      const i = items.indexOf(root.activeElement);
+      if (e.shiftKey && i <= 0) items.at(-1).focus();
+      else if (!e.shiftKey && i === items.length - 1) items[0].focus();
+      else return;
+      e.preventDefault();
+    });
+    root.append(scrim);
+    document.documentElement.append(host);
+    dialog.focus({ preventScroll: true });
 
     function dismiss() {
       send({ type: "dismiss", app: db.apps[n][3] });
       hide();
+      if (previousFocus instanceof HTMLElement) previousFocus.focus({ preventScroll: true });
     }
   }
 
