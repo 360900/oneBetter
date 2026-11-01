@@ -120,7 +120,8 @@
       true: `${main.name} works better on oneOS`,
       false: `${name} doesn't work on Linux`,
     }[linux];
-    const lead = why || (linux === false ? `${main.name} does. ${main.summary}.` : `${main.summary}.`);
+    const lead = why ||
+      (linux === false ? `${main.name} does. ${main.summary}.` : linux === "web" ? "Nothing to install." : `${main.summary}.`);
     const previousFocus = document.activeElement;
 
     host = el("better-here");
@@ -129,6 +130,12 @@
     root.append(el("style", { text: globalThis.BetterHereCSS }));
 
     const others = alts.slice(1);
+    const store = location.hostname === "apps.microsoft.com";
+    const altIcon = main.icon && api.runtime.getURL(main.icon);
+    // "same" and "web" suggest the app itself, so it shows once, without an arrow.
+    const hero = linux === "same" || linux === "web"
+      ? [altIcon ? icon(name, altIcon) : icon(name, pageIcon(), !store)]
+      : [icon(name, pageIcon(), !store), el("div", { class: "arrow" }), icon(main.name, altIcon)];
     const primary = el("a", {
       class: "btn suggested",
       href: altHref(main),
@@ -143,9 +150,7 @@
       el(
         "div",
         { class: "hero", "aria-hidden": "true" },
-        icon(name, pageIcon(), location.hostname !== "apps.microsoft.com"),
-        el("div", { class: "arrow" }),
-        icon(main.name, main.icon && api.runtime.getURL(main.icon)),
+        ...hero,
       ),
       el("h2", { id: "title", text: title }),
       el("p", { class: "lead", text: lead }),
