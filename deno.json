@@ -1,0 +1,9 @@
+{
+  "version": "0.1.0",
+  "tasks": {
+    "check": "deno run -A scripts/check.ts",
+    "build": "deno run -A scripts/build.ts",
+    "test": "deno test -A tests/"
+  },
+  "fmt": { "lineWidth": 120 }
+}
