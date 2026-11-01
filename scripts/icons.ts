@@ -43,14 +43,18 @@ async function fetchIcon(id: string, flathub?: string) {
     await img.body?.cancel();
   }
   if (!img?.ok) throw new Error(urls.length ? `icon ${img?.status}` : "no icon");
+  const bytes = new Uint8Array(await img.arrayBuffer());
   const out = new URL(`${id}.webp`, dir).pathname;
+  // SVGs are rendered at their nominal size on a white background unless told otherwise.
+  const svg = /<svg[\s>]/.test(new TextDecoder().decode(bytes.subarray(0, 4096)));
+  const input = svg ? ["-background", "none", "-density", "384", "svg:-"] : ["-"];
   const cmd = new Deno.Command("magick", {
-    args: ["-", "-background", "none", "-resize", "144x144", "-quality", "90", "-define", "webp:method=6", out],
+    args: [...input, "-background", "none", "-resize", "144x144", "-quality", "90", "-define", "webp:method=6", out],
     stdin: "piped",
     stderr: "piped",
   }).spawn();
   const writer = cmd.stdin.getWriter();
-  await writer.write(new Uint8Array(await img.arrayBuffer()));
+  await writer.write(bytes);
   await writer.close();
   const { success, stderr } = await cmd.output();
   if (!success) throw new Error(new TextDecoder().decode(stderr).trim());
