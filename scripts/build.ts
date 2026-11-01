@@ -13,14 +13,24 @@ if (errors.length) {
 }
 const { apps: list, alts } = data;
 
-// Compact form: apps are [name, linux, [alt indexes], id, why?], alts are {name, summary, url, flathub?}.
+const iconDir = new URL("data/icons/", repo);
+const altIcons = new Set<string>();
+for await (const e of Deno.readDir(iconDir)) if (e.name.endsWith(".webp")) altIcons.add(e.name.slice(0, -5));
+
+// Compact form: apps are [name, linux, [alt indexes], id, why?], alts are {name, summary, url, flathub?, icon?}.
 const altIds = [...new Set(list.flatMap((a) => a.alts))];
 const altIndex = new Map(altIds.map((id, i) => [id, i]));
 const db = {
   apps: list.map((a) => [a.name, a.linux, a.alts.map((id) => altIndex.get(id)), a.id, ...(a.why ? [a.why] : [])]),
   alts: altIds.map((id) => {
     const { name, summary, url, flathub } = alts[id];
-    return flathub ? { name, summary, url, flathub } : { name, summary, url };
+    return {
+      name,
+      summary,
+      url,
+      ...(flathub ? { flathub } : {}),
+      ...(altIcons.has(id) ? { icon: `icons/alts/${id}.webp` } : {}),
+    };
   }),
   index: buildIndex(list),
 };
@@ -40,6 +50,7 @@ function manifest(target: "chromium" | "firefox") {
     permissions: ["storage"],
     action: { default_popup: "popup.html", default_icon: { 16: "icons/16.png", 32: "icons/32.png" } },
     content_scripts: [{ matches, js: ["db.js", "match.js", "content.js"], run_at: "document_idle" }],
+    web_accessible_resources: [{ resources: ["icons/alts/*"], matches }],
   };
   if (target === "chromium") {
     m.background = { service_worker: "background.js" };
@@ -63,9 +74,12 @@ const icons = ["16.png", "32.png", "48.png", "128.png"];
 for (const target of ["chromium", "firefox"] as const) {
   const out = new URL(`dist/${target}/`, repo);
   await Deno.remove(out, { recursive: true }).catch(() => {});
-  await Deno.mkdir(new URL("icons/", out), { recursive: true });
+  await Deno.mkdir(new URL("icons/alts/", out), { recursive: true });
   for (const f of files) await Deno.copyFile(new URL(`src/${f}`, repo), new URL(f, out));
   for (const f of icons) await Deno.copyFile(new URL(`src/icons/${f}`, repo), new URL(`icons/${f}`, out));
+  for (const id of altIds) {
+    if (altIcons.has(id)) await Deno.copyFile(new URL(`${id}.webp`, iconDir), new URL(`icons/alts/${id}.webp`, out));
+  }
   await Deno.writeTextFile(new URL("db.js", out), dbJs);
   await Deno.writeTextFile(new URL("manifest.json", out), JSON.stringify(manifest(target), null, 2) + "\n");
 }

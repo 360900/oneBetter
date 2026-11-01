@@ -39,6 +39,7 @@ deno task check   # validate data, add --flathub --dns to verify online
 
 - `data/apps/*.json`: apps, the URLs they match and their alternatives.
 - `data/alternatives/*.json`: Linux apps, keyed by id.
+- `data/icons/`: alternative icons. `deno run -A scripts/icons.ts` fetches missing ones from Flathub or `data/icons/sources.json`.
 
 A match rule is `host` or `host/path`. Hosts include subdomains. Paths match by prefix at a segment boundary, ignoring up to two leading locale segments such as `/en-us` or `/us/en`.
 
