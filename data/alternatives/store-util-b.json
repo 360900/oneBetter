@@ -1,0 +1,17 @@
+{
+  "nvidia-settings": { "name": "NVIDIA Settings", "summary": "Display and GPU settings, installed with the NVIDIA driver", "url": "https://github.com/NVIDIA/nvidia-settings" },
+  "sticky-notes": { "name": "Sticky Notes", "summary": "Sticky notes on your desktop", "url": "https://github.com/vixalien/sticky", "flathub": "com.vixalien.sticky" },
+  "gnome-sound-recorder": { "name": "Sound Recorder", "summary": "Simple voice and audio recorder", "url": "https://apps.gnome.org/SoundRecorder/", "flathub": "org.gnome.SoundRecorder" },
+  "free-download-manager": { "name": "Free Download Manager", "summary": "Download manager with torrent support", "url": "https://www.freedownloadmanager.org", "flathub": "org.freedownloadmanager.Manager" },
+  "openclaw": { "name": "OpenClaw", "summary": "Personal agent gateway with a desktop companion app", "url": "https://openclaw.ai" },
+  "filebot": { "name": "FileBot", "summary": "Renames and organizes movies, shows and music (Paid)", "url": "https://www.filebot.net", "flathub": "net.filebot.FileBot" },
+  "smartthings-web": { "name": "SmartThings", "summary": "SmartThings smart home control in your browser", "url": "https://my.smartthings.com" },
+  "galaxy-buds-client": { "name": "Galaxy Buds Client", "summary": "Settings, battery and firmware for Samsung Galaxy Buds", "url": "https://github.com/timschneeb/GalaxyBudsClient", "flathub": "me.timschneeberger.GalaxyBudsClient" },
+  "samsung-find-web": { "name": "Samsung Find", "summary": "Locate Samsung devices in your browser", "url": "https://smartthingsfind.samsung.com" },
+  "buzz": { "name": "Buzz", "summary": "Offline audio transcription and translation with Whisper", "url": "https://github.com/chidiwilliams/buzz", "flathub": "io.github.chidiwilliams.Buzz" },
+  "ufs-explorer": { "name": "UFS Explorer", "summary": "Data recovery for many file systems and RAID setups (Paid)", "url": "https://www.ufsexplorer.com" },
+  "kcalc": { "name": "KCalc", "summary": "Scientific calculator", "url": "https://apps.kde.org/kcalc/", "flathub": "org.kde.kcalc" },
+  "qalculate": { "name": "Qalculate!", "summary": "Calculator with units, currencies and symbolic math", "url": "https://qalculate.github.io", "flathub": "io.github.Qalculate.qalculate-qt" },
+  "todesk": { "name": "ToDesk", "summary": "Remote desktop and remote support", "url": "https://www.todesk.com" },
+  "mconverter-web": { "name": "MConverter", "summary": "MConverter file conversion in your browser", "url": "https://mconverter.eu" }
+}

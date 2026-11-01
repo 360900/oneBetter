@@ -1,0 +1,17 @@
+{
+  "kcalc": { "name": "KCalc", "summary": "Scientific calculator by KDE", "url": "https://apps.kde.org/kcalc/", "flathub": "org.kde.kcalc" },
+  "qalculate": { "name": "Qalculate!", "summary": "Calculator with units, currencies and symbolic math", "url": "https://qalculate.github.io", "flathub": "io.github.Qalculate.qalculate-qt" },
+  "kclock": { "name": "KClock", "summary": "Alarms, timers, stopwatch and world clocks by KDE", "url": "https://apps.kde.org/kclock/", "flathub": "org.kde.kclock" },
+  "plasma-audio-volume": { "name": "Audio Volume", "summary": "Per-app volume and output switching, built into KDE Plasma", "url": "https://invent.kde.org/plasma/plasma-pa" },
+  "pwvucontrol": { "name": "pwvucontrol", "summary": "Volume control for PipeWire with per-app levels and device routing", "url": "https://github.com/saivert/pwvucontrol", "flathub": "com.saivert.pwvucontrol" },
+  "clicker": { "name": "Clicker", "summary": "Auto clicker that repeats mouse clicks and key presses", "url": "https://gitlab.gnome.org/eyekay/clicker", "flathub": "net.codelogistics.clicker" },
+  "speedtest-web": { "name": "Speedtest", "summary": "Speedtest in your browser", "url": "https://www.speedtest.net" },
+  "terabox-web": { "name": "TeraBox", "summary": "TeraBox in your browser", "url": "https://www.terabox.com" },
+  "kimi-web": { "name": "Kimi", "summary": "Kimi in your browser", "url": "https://www.kimi.com" },
+  "orcaslicer": { "name": "OrcaSlicer", "summary": "Slicer for 3D printers", "url": "https://www.orcaslicer.com", "flathub": "com.orcaslicer.OrcaSlicer" },
+  "yubico-authenticator": { "name": "Yubico Authenticator", "summary": "Two-factor codes stored on a YubiKey", "url": "https://www.yubico.com/products/yubico-authenticator/", "flathub": "com.yubico.yubioath" },
+  "feem": { "name": "Feem", "summary": "Offline file sharing between devices on the same network", "url": "https://feem.io" },
+  "ufs-explorer": { "name": "UFS Explorer", "summary": "Data recovery for many file systems and RAID setups (Paid)", "url": "https://www.ufsexplorer.com" },
+  "sunlogin": { "name": "Sunlogin", "summary": "Remote desktop control and support", "url": "https://sunlogin.oray.com" },
+  "cores": { "name": "Cores", "summary": "Hardware monitor for CPU, GPU, memory, storage and network sensors", "url": "https://www.coresmonitor.com" }
+}
