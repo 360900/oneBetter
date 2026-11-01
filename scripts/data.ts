@@ -7,11 +7,16 @@ export interface Alt {
   flathub?: string;
 }
 
+// false: no Linux version. true: there is one, but the alternative is better.
+// "same": the first alternative is the app's own Linux version (Store pages only).
+// "web": the first alternative is the app's web version.
+export type Linux = boolean | "same" | "web";
+
 export interface App {
   id: string;
   name: string;
   match: string[];
-  linux: boolean;
+  linux: Linux;
   alts: string[];
   why?: string;
   file?: string;
@@ -50,6 +55,8 @@ export const SHARED_HOSTS = new Set([
 const ID = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 const HOST = /^(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z]{2,}$/;
 const PATH = /^(?:\/[a-z0-9._~%+@!$&'()*,;=:-]+)+$/;
+const STORE_ID = /^(?:9[0-9A-Z]{11}|XP[0-9A-Z]{12})$/;
+const STORE_HOST = "apps.microsoft.com";
 const FLATHUB = /^[A-Za-z0-9_-]+(?:\.[A-Za-z0-9_-]+){2,}$/;
 const DASH = /[\u2013\u2014]/;
 
@@ -59,7 +66,11 @@ async function readJson(url: URL): Promise<unknown> {
 
 async function listJson(dir: URL): Promise<URL[]> {
   const out: URL[] = [];
-  for await (const e of Deno.readDir(dir)) if (e.isFile && e.name.endsWith(".json")) out.push(new URL(e.name, dir));
+  try {
+    for await (const e of Deno.readDir(dir)) if (e.isFile && e.name.endsWith(".json")) out.push(new URL(e.name, dir));
+  } catch (e) {
+    if (!(e instanceof Deno.errors.NotFound)) throw e;
+  }
   return out.sort((a, b) => a.pathname.localeCompare(b.pathname));
 }
 
@@ -110,11 +121,11 @@ export async function load(): Promise<{ data: Data; errors: string[]; warnings: 
       if (seenId.has(a.id)) err(`${at}: duplicate id (also in ${seenId.get(a.id)})`);
       seenId.set(a.id, file);
       if (typeof a.name !== "string" || !a.name.trim()) err(`${at}: missing name`);
-      if (typeof a.linux !== "boolean") err(`${at}: linux must be true or false`);
+      if (![true, false, "same", "web"].includes(a.linux)) err(`${at}: linux must be true, false, "same" or "web"`);
       if (a.why !== undefined && (typeof a.why !== "string" || a.why.length > 120)) err(`${at}: why must be a string under 120 chars`);
       for (const k of Object.keys(a)) if (!["id", "name", "match", "linux", "alts", "why"].includes(k)) err(`${at}: unknown key ${k}`);
       if (DASH.test(JSON.stringify(a))) err(`${at}: contains an en/em dash`);
-      if (!Array.isArray(a.match) || !a.match.length) err(`${at}: match must be a non-empty array`);
+      if (!Array.isArray(a.match)) err(`${at}: match must be an array`);
       for (const rule of a.match ?? []) {
         const i = rule.indexOf("/");
         const host = i < 0 ? rule : rule.slice(0, i);
@@ -132,8 +143,36 @@ export async function load(): Promise<{ data: Data; errors: string[]; warnings: 
         used.add(id);
       }
       if (new Set(a.alts).size !== a.alts?.length) err(`${at}: duplicate alternatives`);
-      apps.push({ id: a.id, name: a.name, match: a.match, linux: a.linux, alts: a.alts, ...(a.why ? { why: a.why } : {}), file });
+      apps.push({ id: a.id, name: a.name, match: [...(a.match ?? [])], linux: a.linux, alts: a.alts, ...(a.why ? { why: a.why } : {}), file });
     }
+  }
+
+  // data/store/*.json maps Microsoft Store product ids to app ids.
+  const byId = new Map(apps.map((a) => [a.id, a]));
+  const seenStore = new Map<string, string>();
+  for (const url of await listJson(new URL("store/", root))) {
+    const file = url.pathname.split("/").pop()!;
+    const obj = await readJson(url) as Record<string, string>;
+    for (const [pid, appId] of Object.entries(obj)) {
+      const at = `${file}: "${pid}"`;
+      if (!STORE_ID.test(pid)) err(`${at}: not a Store product id (uppercase, 9... or XP...)`);
+      if (seenStore.has(pid)) err(`${at}: also in ${seenStore.get(pid)}`);
+      seenStore.set(pid, file);
+      const app = byId.get(appId);
+      if (!app) { err(`${at}: unknown app "${appId}"`); continue; }
+      const rule = `${STORE_HOST}/detail/${pid.toLowerCase()}`;
+      if (seenRule.has(rule)) { err(`${at}: rule "${rule}" also used by ${seenRule.get(rule)}`); continue; }
+      seenRule.set(rule, appId);
+      app.match.push(rule);
+    }
+  }
+  for (const a of apps) {
+    const at = `${a.file}: app "${a.id}"`;
+    if (!a.match.length) err(`${at}: needs a match rule or a Store id`);
+    if (a.linux === "same" && a.match.some((r) => !r.startsWith(`${STORE_HOST}/`))) {
+      err(`${at}: "same" apps offer Linux builds on their own sites, so only Store rules are allowed`);
+    }
+    if (a.linux === "web" && alts[a.alts[0]]?.flathub) err(`${at}: "web" needs a web app as the first alternative`);
   }
 
   for (const id of Object.keys(alts)) if (!used.has(id)) warnings.push(`alternative "${id}" (${altFile[id]}) is unused`);

@@ -32,10 +32,17 @@
     return next === "" || next === "/" || next === ".";
   }
 
-  function candidatePaths(pathname) {
+  // Microsoft Store pages: /store/detail/name/ID, /detail/name/ID and /detail/ID all mean /detail/id.
+  const STORE = /^(?:\/[a-z]{2}(?:-[a-z]{2,4})?)?(?:\/store)?\/detail(?:\/[^/]+)?\/(9[0-9a-z]{11}|xp[0-9a-z]{12})$/;
+
+  function candidatePaths(host, pathname) {
     let p = pathname.toLowerCase();
     try { p = decodeURIComponent(p); } catch {}
     p = p.replace(/\/+$/, "") || "/";
+    if (host === "apps.microsoft.com") {
+      const m = p.match(STORE);
+      if (m) return [`/detail/${m[1]}`];
+    }
     const out = [p];
     // Up to two locale segments: /de/..., /us/en/...
     for (let i = 0; i < 2; i++) {
@@ -51,8 +58,9 @@
     let u;
     try { u = new URL(url); } catch { return -1; }
     if (u.protocol !== "https:" && u.protocol !== "http:") return -1;
-    const labels = u.hostname.toLowerCase().replace(/\.$/, "").split(".");
-    const paths = candidatePaths(u.pathname);
+    const hostname = u.hostname.toLowerCase().replace(/\.$/, "");
+    const labels = hostname.split(".");
+    const paths = candidatePaths(hostname, u.pathname);
     for (let i = 0; i < labels.length - 1; i++) {
       const rules = index[labels.slice(i).join(".")];
       if (!rules) continue;

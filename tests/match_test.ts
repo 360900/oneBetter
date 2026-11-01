@@ -10,6 +10,7 @@ const apps = [
   { match: ["adobe.com/products/photoshop/elements"] },
   { match: ["microsoft.com/microsoft-365/onedrive/download"] },
   { match: ["developer.arm.com/tools%20and%20software/keil%20mdk"] },
+  { match: ["apps.microsoft.com/detail/9nksqgp7f2nh", "apps.microsoft.com/detail/xpfd4t9n395qn6"] },
 ];
 const index = buildIndex(apps);
 const at = (url: string) => lookup(index, url);
@@ -54,4 +55,14 @@ Deno.test("case, encoding, query and hash do not matter", () => {
 Deno.test("only http and https", () => {
   assertEquals(at("ftp://teamviewer.com/"), -1);
   assertEquals(at("not a url"), -1);
+});
+
+Deno.test("Store links resolve to the product id", () => {
+  assertEquals(at("https://apps.microsoft.com/detail/9NKSQGP7F2NH?hl=en-US&gl=US"), 6);
+  assertEquals(at("https://apps.microsoft.com/store/detail/whatsapp/9NKSQGP7F2NH"), 6);
+  assertEquals(at("https://apps.microsoft.com/store/detail/9nksqgp7f2nh"), 6);
+  assertEquals(at("https://apps.microsoft.com/detail/adobe-photoshop/XPFD4T9N395QN6"), 6);
+  assertEquals(at("https://apps.microsoft.com/de-de/detail/9nksqgp7f2nh"), 6);
+  assertEquals(at("https://apps.microsoft.com/detail/9nksqgp7f2nx"), -1);
+  assertEquals(at("https://apps.microsoft.com/"), -1);
 });

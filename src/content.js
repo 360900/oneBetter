@@ -42,7 +42,14 @@
   }
 
   // Largest icon the page declares, so the app we're comparing shows with its own icon.
+  // Store pages show the product's icon as og:image, as long as it belongs to the current product.
   function pageIcon() {
+    if (location.hostname === "apps.microsoft.com") {
+      const id = location.pathname.split("/").pop().toLowerCase();
+      const og = document.querySelector("meta[property='og:url']")?.content.toLowerCase() || "";
+      const img = document.querySelector("meta[property='og:image']")?.content;
+      return img && og.includes(`/detail/${id}`) ? img : null;
+    }
     let best = null;
     let bestSize = 0;
     for (const link of document.querySelectorAll("link[rel~='icon'], link[rel~='apple-touch-icon']")) {
@@ -107,8 +114,13 @@
     const [name, linux, altIds, , why] = db.apps[n];
     const alts = altIds.map((i) => db.alts[i]);
     const main = alts[0];
-    const title = linux ? `${main.name} works better on oneOS` : `${name} doesn't work on Linux`;
-    const lead = why || (linux ? `${main.summary}.` : `${main.name} does. ${main.summary}.`);
+    const title = {
+      same: `${name} works on oneOS too`,
+      web: `${name} works in your browser`,
+      true: `${main.name} works better on oneOS`,
+      false: `${name} doesn't work on Linux`,
+    }[linux];
+    const lead = why || (linux === false ? `${main.name} does. ${main.summary}.` : `${main.summary}.`);
     const previousFocus = document.activeElement;
 
     host = el("better-here");
@@ -123,7 +135,7 @@
       target: main.flathub ? "_self" : "_blank",
       rel: "noopener",
       title: main.flathub ? "Opens your software center" : main.url,
-      text: main.flathub ? `Install ${main.name}` : `Get ${main.name}`,
+      text: main.flathub ? `Install ${main.name}` : `${linux === "web" ? "Open" : "Get"} ${main.name}`,
     });
     const dialog = el(
       "section",
@@ -131,7 +143,7 @@
       el(
         "div",
         { class: "hero", "aria-hidden": "true" },
-        icon(name, pageIcon(), true),
+        icon(name, pageIcon(), location.hostname !== "apps.microsoft.com"),
         el("div", { class: "arrow" }),
         icon(main.name, main.icon && api.runtime.getURL(main.icon)),
       ),

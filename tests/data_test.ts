@@ -31,3 +31,10 @@ Deno.test("examples from the brief", () => {
   assertEquals(first("https://www.adobe.com/products/photoshop.html"), "photocraft");
   assertEquals(first("https://www.adobe.com/products/premiere.html"), "filmcraft");
 });
+
+Deno.test("Store ids resolve to their apps", () => {
+  const index = buildIndex(data.apps);
+  const app = (url: string) => data.apps[lookup(index, url)]?.id;
+  assertEquals(app("https://apps.microsoft.com/detail/9nksqgp7f2nh?hl=en-US&gl=US"), "whatsapp-desktop");
+  assertEquals(app("https://apps.microsoft.com/store/detail/whatsapp/9NKSQGP7F2NH"), "whatsapp-desktop");
+});

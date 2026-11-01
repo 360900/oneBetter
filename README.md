@@ -39,9 +39,10 @@ deno task check   # validate data, add --flathub --dns to verify online
 
 - `data/apps/*.json`: apps, the URLs they match and their alternatives.
 - `data/alternatives/*.json`: Linux apps, keyed by id.
+- `data/store/*.json`: Microsoft Store product ids mapped to app ids.
 - `data/icons/`: alternative icons. `deno run -A scripts/icons.ts` fetches missing ones from Flathub or `data/icons/sources.json`.
 
-A match rule is `host` or `host/path`. Hosts include subdomains. Paths match by prefix at a segment boundary, ignoring up to two leading locale segments such as `/en-us` or `/us/en`.
+A match rule is `host` or `host/path`. Hosts include subdomains. Paths match by prefix at a segment boundary, ignoring up to two leading locale segments such as `/en-us` or `/us/en`. Store links match by product id in any of their URL forms.
 
 ```json
 {
@@ -53,6 +54,11 @@ A match rule is `host` or `host/path`. Hosts include subdomains. Paths match by 
 }
 ```
 
-`linux` is true when the app has a Linux build, which changes the wording from "doesn't work on Linux" to "works better on oneOS".
+`linux` sets the wording:
+
+- `false`: "{App} doesn't work on Linux".
+- `true`: the app has a Linux build, but "{Alt} works better on oneOS".
+- `"same"`: "{App} works on oneOS too", the first alternative is its Linux build. Store pages only.
+- `"web"`: "{App} works in your browser", the first alternative is its web version.
 
 Optional `why` replaces the card's description, e.g. "7-Zip for Linux is command line only."
