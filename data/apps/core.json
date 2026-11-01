@@ -2,8 +2,8 @@
   { "id": "teamviewer", "name": "TeamViewer", "match": ["teamviewer.com"], "linux": true, "alts": ["rustdesk"] },
   { "id": "anydesk", "name": "AnyDesk", "match": ["anydesk.com"], "linux": true, "alts": ["rustdesk"] },
   { "id": "discord", "name": "Discord", "match": ["discord.com/download", "discord.com/install", "discordapp.com/download"], "linux": true, "alts": ["vesktop"] },
-  { "id": "logi-options-plus", "name": "Logi Options+", "match": ["logitech.com/software/logi-options-plus", "logi.com/software/logi-options-plus", "logitech.com/software/options"], "linux": false, "alts": ["solaar"] },
-  { "id": "onedrive", "name": "OneDrive", "match": ["microsoft.com/microsoft-365/onedrive/download", "microsoft.com/microsoft-365/onedrive/onedrive-for-home", "microsoft.com/microsoft-365/onedrive/online-cloud-storage"], "linux": false, "alts": ["rclone-ui"] },
-  { "id": "photoshop", "name": "Photoshop", "match": ["adobe.com/products/photoshop", "photoshop.adobe.com"], "linux": false, "alts": ["photocraft", "krita", "gimp"] },
-  { "id": "premiere-pro", "name": "Premiere Pro", "match": ["adobe.com/products/premiere"], "linux": false, "alts": ["filmcraft", "kdenlive"] }
+  { "id": "logi-options-plus", "name": "Logi Options+", "match": ["logitech.com/software/logi-options-plus", "logi.com/software/logi-options-plus", "logitech.com/software/options"], "linux": false, "alts": ["solaar", "openlogi"] },
+  { "id": "onedrive", "name": "OneDrive", "match": ["microsoft.com/microsoft-365/onedrive/download", "microsoft.com/microsoft-365/onedrive/onedrive-for-home", "microsoft.com/microsoft-365/onedrive/online-cloud-storage"], "linux": false, "alts": ["rclone-ui", "rclone-manager"] },
+  { "id": "photoshop", "name": "Photoshop", "match": ["adobe.com/products/photoshop", "photoshop.adobe.com"], "linux": false, "alts": ["photocraft", "gimp", "krita"] },
+  { "id": "premiere-pro", "name": "Premiere Pro", "match": ["adobe.com/products/premiere"], "linux": false, "alts": ["filmcraft", "davinci-resolve", "kdenlive"] }
 ]

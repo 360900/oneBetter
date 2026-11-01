@@ -25,5 +25,8 @@
   "goxlr-utility": { "name": "GoXLR Utility", "summary": "Configures GoXLR and GoXLR Mini mixers", "url": "https://github.com/GoXLR-on-Linux/goxlr-utility" },
   "cameractrls": { "name": "Cameractrls", "summary": "Webcam settings like focus, exposure and zoom", "url": "https://github.com/soyersoyer/cameractrls", "flathub": "hu.irl.cameractrls" },
   "easyeffects": { "name": "Easy Effects", "summary": "Noise reduction, equalizer and other effects for mics and apps", "url": "https://github.com/wwmm/easyeffects", "flathub": "com.github.wwmm.easyeffects" },
-  "qmapshack": { "name": "QMapShack", "summary": "GPS maps, routes and tracks, with Garmin device support", "url": "https://github.com/Maproom/qmapshack" }
+  "qmapshack": { "name": "QMapShack", "summary": "GPS maps, routes and tracks, with Garmin device support", "url": "https://github.com/Maproom/qmapshack" },
+  "opendeck": { "name": "OpenDeck", "summary": "Configures Elgato Stream Deck devices and runs Stream Deck plugins", "url": "https://github.com/nekename/OpenDeck", "flathub": "me.amankhanna.opendeck" },
+  "arctis-sound-manager": { "name": "Arctis Sound Manager", "summary": "Sonar-style EQ, ChatMix, mixer and headset settings for SteelSeries Arctis", "url": "https://github.com/loteran/Arctis-Sound-Manager" },
+  "luminance": { "name": "Luminance", "summary": "Brightness and contrast sliders for laptop and external monitors", "url": "https://github.com/sidevesh/Luminance", "flathub": "com.sidevesh.Luminance" }
 }

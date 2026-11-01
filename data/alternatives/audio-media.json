@@ -12,8 +12,9 @@
   "milkytracker": { "name": "MilkyTracker", "summary": "Music tracker for MOD and XM modules", "url": "https://milkytracker.org", "flathub": "org.milkytracker.MilkyTracker" },
   "furnace": { "name": "Furnace", "summary": "Chiptune tracker for many retro sound chips", "url": "https://github.com/tildearrow/furnace", "flathub": "org.tildearrow.furnace" },
   "easyeffects": { "name": "Easy Effects", "summary": "System-wide equalizer, noise reduction and audio effects", "url": "https://github.com/wwmm/easyeffects", "flathub": "com.github.wwmm.easyeffects" },
-  "jamesdsp": { "name": "JamesDSP", "summary": "System-wide audio effects and equalizer", "url": "https://github.com/Audio4Linux/JDSP4Linux", "flathub": "me.timschneeberger.jdsp4linux" },
+  "mini-eq": { "name": "Mini EQ", "summary": "System-wide parametric equalizer with AutoEq and Equalizer APO preset import", "url": "https://github.com/bhack/mini-eq", "flathub": "io.github.bhack.mini-eq" },
   "qpwgraph": { "name": "qpwgraph", "summary": "Patchbay for routing audio and MIDI between apps and devices", "url": "https://gitlab.freedesktop.org/rncbc/qpwgraph", "flathub": "org.rncbc.qpwgraph" },
+  "pulsemeeter": { "name": "Pulsemeeter", "summary": "Voicemeeter-style mixer with virtual inputs, outputs and routing", "url": "https://github.com/theRealCarneiro/pulsemeeter" },
   "haruna": { "name": "Haruna", "summary": "Video player by KDE, built on mpv", "url": "https://haruna.kde.org", "flathub": "org.kde.haruna" },
   "mpc-qt": { "name": "Media Player Classic Qute Theater", "summary": "Media player modeled on Media Player Classic", "url": "https://mpc-qt.github.io", "flathub": "io.github.mpc_qt.mpc-qt" },
   "mpv": { "name": "mpv", "summary": "Minimal, keyboard-driven media player", "url": "https://mpv.io", "flathub": "io.mpv.Mpv" },
@@ -24,10 +25,12 @@
   "audacious": { "name": "Audacious", "summary": "Lightweight music player with Winamp skin support", "url": "https://audacious-media-player.org", "flathub": "org.atheme.audacious" },
   "amarok": { "name": "Amarok", "summary": "Music player and collection manager by KDE", "url": "https://amarok.kde.org", "flathub": "org.kde.amarok" },
   "cider": { "name": "Cider", "summary": "Apple Music client", "url": "https://cider.sh", "flathub": "sh.cider.Cider" },
+  "sone": { "name": "SONE", "summary": "Unofficial TIDAL client with bit-perfect lossless playback", "url": "https://github.com/lullabyX/sone", "flathub": "io.github.lullabyX.sone" },
   "high-tide": { "name": "High Tide", "summary": "Unofficial TIDAL client", "url": "https://github.com/Nokse22/high-tide", "flathub": "io.github.nokse22.high-tide" },
   "tidal-hifi": { "name": "TIDAL Hi-Fi", "summary": "Unofficial TIDAL desktop client", "url": "https://github.com/Mastermindzh/tidal-hifi", "flathub": "com.mastermindzh.tidal-hifi" },
   "deezer-linux": { "name": "Deezer for Linux", "summary": "Unofficial Linux build of the Deezer desktop app", "url": "https://github.com/aunetx/deezer-linux", "flathub": "dev.aunetx.deezer" },
   "handbrake": { "name": "HandBrake", "summary": "Video transcoder", "url": "https://handbrake.fr", "flathub": "fr.handbrake.ghb" },
+  "frame": { "name": "Frame", "summary": "Video, audio and image converter built on FFmpeg", "url": "https://github.com/66HEX/frame", "flathub": "io.github._66HEX.Frame" },
   "soundconverter": { "name": "SoundConverter", "summary": "Batch audio file converter", "url": "https://soundconverter.org", "flathub": "org.soundconverter.SoundConverter" },
   "freac": { "name": "fre:ac", "summary": "Audio converter and CD ripper", "url": "https://www.freac.org", "flathub": "org.freac.freac" },
   "whipper": { "name": "whipper", "summary": "Command-line CD ripper with AccurateRip verification", "url": "https://github.com/whipper-team/whipper" },
@@ -39,6 +42,5 @@
   "gpu-screen-recorder": { "name": "GPU Screen Recorder", "summary": "Low-overhead screen and game recorder with instant replay", "url": "https://git.dec05eba.com/gpu-screen-recorder/about/", "flathub": "com.dec05eba.gpu_screen_recorder" },
   "k3b": { "name": "K3b", "summary": "CD, DVD and Blu-ray burning by KDE", "url": "https://apps.kde.org/k3b/" },
   "brasero": { "name": "Brasero", "summary": "CD and DVD burning", "url": "https://gitlab.gnome.org/GNOME/brasero", "flathub": "org.gnome.Brasero" },
-  "makemkv": { "name": "MakeMKV", "summary": "Converts DVD and Blu-ray discs to MKV files", "url": "https://www.makemkv.com", "flathub": "com.makemkv.MakeMKV" },
-  "ultrastar": { "name": "UltraStar Deluxe", "summary": "Karaoke game with pitch scoring", "url": "https://usdx.eu", "flathub": "eu.usdx.UltraStarDeluxe" }
+  "makemkv": { "name": "MakeMKV", "summary": "Converts DVD and Blu-ray discs to MKV files", "url": "https://www.makemkv.com", "flathub": "com.makemkv.MakeMKV" }
 }

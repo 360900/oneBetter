@@ -2,8 +2,6 @@
   "digikam": { "name": "digiKam", "summary": "Photo library manager with raw support, tagging and editing", "url": "https://www.digikam.org", "flathub": "org.kde.digikam" },
   "rawtherapee": { "name": "RawTherapee", "summary": "Raw photo developer", "url": "https://rawtherapee.com", "flathub": "com.rawtherapee.RawTherapee" },
   "entangle": { "name": "Entangle", "summary": "Tethered shooting and remote camera control", "url": "https://entangle-photo.org", "flathub": "org.entangle_photo.Manager" },
-  "hugin": { "name": "Hugin", "summary": "Panorama stitching", "url": "https://hugin.sourceforge.io", "flathub": "net.sourceforge.Hugin" },
-  "luminance-hdr": { "name": "Luminance HDR", "summary": "HDR merging and tone mapping", "url": "https://qtpfsgui.sourceforge.net", "flathub": "net.sourceforge.qtpfsgui.LuminanceHDR" },
   "upscayl": { "name": "Upscayl", "summary": "Image upscaling with local models", "url": "https://upscayl.org", "flathub": "org.upscayl.Upscayl" },
   "xnviewmp": { "name": "XnView MP", "summary": "Image viewer, browser and batch converter", "url": "https://www.xnview.com/en/xnview/", "flathub": "com.xnview.XnViewMP" },
   "converseen": { "name": "Converseen", "summary": "Batch image converter and resizer", "url": "https://converseen.fasterland.net", "flathub": "net.fasterland.converseen" },
@@ -24,5 +22,11 @@
   "goxel": { "name": "Goxel", "summary": "Voxel editor", "url": "https://goxel.xyz", "flathub": "io.github.guillaumechereau.Goxel" },
   "sweethome3d": { "name": "Sweet Home 3D", "summary": "Interior design and floor plans with 3D preview", "url": "https://www.sweethome3d.com", "flathub": "com.sweethome3d.Sweethome3d" },
   "dune3d": { "name": "Dune 3D", "summary": "Parametric 3D CAD", "url": "https://dune3d.org", "flathub": "org.dune3d.dune3d" },
-  "qucs-s": { "name": "Qucs-S", "summary": "Circuit simulation with SPICE", "url": "https://ra3xdh.github.io", "flathub": "io.github.ra3xdh.qucs_s" }
+  "qucs-s": { "name": "Qucs-S", "summary": "Circuit simulation with SPICE", "url": "https://ra3xdh.github.io", "flathub": "io.github.ra3xdh.qucs_s" },
+  "upscaler": { "name": "Upscaler", "summary": "Simple image upscaling and enhancing with local AI models", "url": "https://tesk.page/upscaler", "flathub": "io.gitlab.theevilskeleton.Upscaler" },
+  "friction": { "name": "Friction", "summary": "Motion graphics with keyframes, expressions and effects", "url": "https://friction.graphics" },
+  "penpot": { "name": "Penpot", "summary": "Open-source interface design and prototyping, in the browser or self-hosted", "url": "https://penpot.app" },
+  "davinci-resolve": { "name": "DaVinci Resolve", "summary": "Professional editing, color grading, effects and audio post", "url": "https://www.blackmagicdesign.com/products/davinciresolve" },
+  "bricscad": { "name": "BricsCAD", "summary": "Paid DWG-native 2D and 3D CAD with BIM and mechanical tools", "url": "https://bricscad.octave.com" },
+  "plasticity": { "name": "Plasticity", "summary": "Paid NURBS solid and surface modeling for designers", "url": "https://www.plasticity.xyz" }
 }
