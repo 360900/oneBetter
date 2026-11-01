@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="popup.css">
+  </head>
+  <body>
+    <header>
+      <img src="icons/128.png" alt="" width="32" height="32">
+      <div>
+        <h1>Better Here</h1>
+        <p id="count"></p>
+      </div>
+    </header>
+    <label class="row">
+      <span>Show suggestions</span>
+      <input id="enabled" type="checkbox" role="switch">
+    </label>
+    <div class="row">
+      <span id="dismissed"></span>
+      <button id="reset" class="btn">Show again</button>
+    </div>
+    <script src="db.js"></script>
+    <script src="popup.js"></script>
+  </body>
+</html>
