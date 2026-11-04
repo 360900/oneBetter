@@ -1,6 +1,5 @@
 # oneBetter
-
-Better Here is a browser extension for Linux. When you visit the site of a Windows or macOS app, it suggests a Linux alternative. It never redirects.
+oneBetter is a browser extension for Linux. When you visit the site of a Windows or macOS app, it suggests a Linux alternative.
 
 ## Install
 
