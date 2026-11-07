@@ -1,4 +1,7 @@
 # oneBetter
+
+![oneBetter suggesting an alternative on the Photoshop site](docs/img/onebetter-card.png)
+
 oneBetter is a browser extension for Linux. When you visit the site of a Windows or macOS app, it suggests a Linux alternative.
 
 ## Install
